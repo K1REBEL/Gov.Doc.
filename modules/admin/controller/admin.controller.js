@@ -23,6 +23,14 @@ const retrieveDoc = async (req, res) => {
 
 const editDoc = async (req, res) => {
    const name = req.body.name;
+   try {
+      const { desc, contents, source, pre_req, conditions, steps } = req.body;
+      const updatedDoc = await docModel.findOneAndUpdate({name}, { desc, contents, source, pre_req, conditions, steps });
+      res.json({message: "Updated", updatedDoc});
+   } catch (error) {
+      res.json(error.message);
+   }
+   
 };
 
 
