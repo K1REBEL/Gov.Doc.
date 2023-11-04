@@ -30,6 +30,9 @@ const editDoc = async (req, res) => {
    } catch (error) {
       res.json(error.message);
    }
+};
+
+const retrieveCat = async (req, res) => {
    
 };
 
