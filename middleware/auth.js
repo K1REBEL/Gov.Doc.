@@ -1,6 +1,5 @@
 var jwt = require("jsonwebtoken");
-const userModel = require("../DB/model/user");
-const vehicleModel = require("../DB/model/vehicle");
+
 const accessroles = {
    admin: "admin",
    user: "user"
