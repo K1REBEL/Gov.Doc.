@@ -1,4 +1,5 @@
 const docModel = require("../../../DB/model/document");
+const placeModel = require("../../../DB/model/place");
 
 
 const addDocument = async (req, res) => {
@@ -36,7 +37,7 @@ const retrieveCat = async (req, res) => {
    try {
       const targetCat = req.params.targetCat;
       // const targetCat = req.body;
-      console.log(req.params)
+      // console.log(req.params);
       const Docs = await docModel.find({ category: { $regex: targetCat } });
       if(!Docs) { res.json({message: "Invalid category or Category has no documents."})}
       else{
@@ -45,7 +46,13 @@ const retrieveCat = async (req, res) => {
    } catch (error) {
       res.json(error.message);
    }
+};
 
+const addPlace = async (req, res) => {
+   const { name, address, g_location } = req.body;
+   const place = new placeModel({ name, address, g_location });
+   const savedPlace = await place.save();
+   res.json({message: "Place saved.", savedPlace});
 };
 
 
@@ -54,5 +61,6 @@ module.exports = {
    retrieveDoc,
    editDoc,
    retrieveCat,
-
+   addPlace,
+   
 }
