@@ -55,6 +55,29 @@ const addPlace = async (req, res) => {
    res.json({message: "Place saved.", savedPlace});
 };
 
+const getPlaceData = async (req, res) => {
+   const name = req.body.name;
+   const foundPlace = await placeModel.findOne({ name });
+   if(!foundPlace){ res.status(400).json({ message: "Add the Place first."}) }
+   else{
+      res.json({ message: "Here you go!", foundPlace});
+   }
+};
+
+const updatePlace = async (req, res) => {
+   const name = req.body.name;
+   try {
+      const { name, docs, newDocs } = req.body;
+      if(docs && newDocs){ docs.push(...newDocs); }
+      console.log(docs);
+      
+      const updatedPlace = await placeModel.findOneAndUpdate({name}, { docs });
+      res.json({message: "Updated", updatedPlace});
+   } catch (error) {
+      res.json(error.message);
+   }
+};
+
 
 module.exports = {
    addDocument,
@@ -62,5 +85,7 @@ module.exports = {
    editDoc,
    retrieveCat,
    addPlace,
-   
+   getPlaceData,
+   updatePlace,
+
 }
